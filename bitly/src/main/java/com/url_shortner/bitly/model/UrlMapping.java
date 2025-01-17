@@ -1,6 +1,5 @@
 package com.url_shortner.bitly.model;
 
-import com.url_shortner.bitly.service.UserDetailImp;
 import jakarta.persistence.*;
 import lombok.Data;
 
