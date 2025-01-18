@@ -22,7 +22,7 @@ public class UserDetailImp implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailImp build(User user){
+    public static UserDetailImp build(User user){
         GrantedAuthority authority=new SimpleGrantedAuthority(user.getRole());
         return new UserDetailImp(
                 user.getId(), user.getUsername(),

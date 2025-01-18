@@ -1,6 +1,7 @@
 package com.url_shortner.bitly.jwtservice;
 
 import com.url_shortner.bitly.service.UserDetailImp;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -17,7 +18,7 @@ public class JwtUtils {
     private String jwtSecretKey;
 
     @Value("${jwt.expiration.time}")
-    private String jwtExpirationTime;
+    private Long jwtExpirationTime;
 
 
     public String getJwtFromHeader(HttpServletRequest request){
@@ -40,6 +41,22 @@ public class JwtUtils {
                 .issuedAt(new Date())
                 .expiration(new Date(new Date().getTime()+jwtExpirationTime))
                 .signWith((SecretKey) key()).compact();
+    }
+
+    public String getUsernameFromJwt(String token){
+        return Jwts.parser().verifyWith((SecretKey) key()).build().parseSignedClaims(token)
+                .getPayload().getSubject();
+    }
+    public boolean verifyToken(String authToken){
+        try {
+            Jwts.parser().verifyWith((SecretKey) key()).build().parseSignedClaims(authToken);
+            return true;
+        } catch (JwtException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        }
+
     }
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecretKey));
