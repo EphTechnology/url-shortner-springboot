@@ -2,6 +2,7 @@ package com.url_shortner.bitly.service;
 
 import com.url_shortner.bitly.Repository.UserRepo;
 import com.url_shortner.bitly.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ public class UserDetailServiceImp implements UserDetailsService {
     @Autowired
     UserRepo userRepo;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user=userRepo.findByUsername(username);
