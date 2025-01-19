@@ -43,6 +43,7 @@ public class WebSecurityConfig {
         return daoAuthProv;
     }
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        http.csrf(AbstractHttpConfigurer::disable);
        http.authorizeHttpRequests(authorize->authorize.
