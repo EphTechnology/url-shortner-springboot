@@ -5,6 +5,7 @@ import com.url_shortner.bitly.jwtservice.JwtResponse;
 import com.url_shortner.bitly.jwtservice.JwtUtils;
 import com.url_shortner.bitly.model.User;
 import com.url_shortner.bitly.request.LoginRequest;
+import com.url_shortner.bitly.request.UrlMappingDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ public class UserService {
     private JwtUtils jwtUtils;
     private UserRepo userRepo;
     private AuthenticationManager authenticationManager;
+
     public User userRegister(User user){
         return userRepo.save(user);
     }
@@ -31,4 +33,9 @@ public class UserService {
         String jwt=jwtUtils.generateJwtToken(userDetail);
         return new JwtResponse(jwt);
     }
+    public User findByUserName(String username){
+        return userRepo.findByUsername(username);
+    }
+
+
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class UrlMapping {
 
     private String original_url;
     private String short_url;
-    private LocalDate date;
+    private LocalDateTime createdAt;
     private int click_count=0;
 
     @ManyToOne
