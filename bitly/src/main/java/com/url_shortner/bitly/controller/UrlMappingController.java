@@ -1,5 +1,6 @@
 package com.url_shortner.bitly.controller;
 
+import com.url_shortner.bitly.Dto.ClickEventDto;
 import com.url_shortner.bitly.model.User;
 import com.url_shortner.bitly.request.UrlMappingDto;
 import com.url_shortner.bitly.service.UrlMappingService;
@@ -11,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +38,17 @@ public class UrlMappingController {
         User user=userService.findByUserName(principal.getName());
         List<UrlMappingDto> urlMappingDto=urlMappingService.getUrlByUser(user);
         return new ResponseEntity<>(urlMappingDto,HttpStatus.OK);
+    }
+    @GetMapping("/analytics/{shortUrl}")
+    public ResponseEntity<List<ClickEventDto>> getAnalytics(
+            @PathVariable String shortURl, @RequestParam String startDate, @RequestParam String endDate
+    ){
+        DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+        LocalDateTime start=LocalDateTime.parse(startDate,dateTimeFormatter);
+        LocalDateTime end=LocalDateTime.parse(endDate,dateTimeFormatter);
+        List<ClickEventDto> clickEventDto=urlMappingService.getClickEventsByDate(shortURl,start,end);
+        return new ResponseEntity<>(clickEventDto,HttpStatus.OK);
     }
 
 }

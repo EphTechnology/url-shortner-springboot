@@ -1,5 +1,6 @@
 package com.url_shortner.bitly.service;
 
+import com.url_shortner.bitly.Dto.ClickEventDto;
 import com.url_shortner.bitly.Repository.UrlRepo;
 import com.url_shortner.bitly.model.UrlMapping;
 import com.url_shortner.bitly.model.User;
@@ -50,4 +51,8 @@ public class UrlMappingService {
         return urlRepo.findByUser(user).stream().map(this::converToUrlMappingDto).toList();
     }
 
+    public List<ClickEventDto> getClickEventsByDate(String shortURl, LocalDateTime start, LocalDateTime
+                                                    ) {
+        return null;
+    }
 }
