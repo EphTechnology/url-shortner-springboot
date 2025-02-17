@@ -21,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/urls")
 
+@AllArgsConstructor
 public class UrlMappingController {
     UserService userService;
     UrlMappingService urlMappingService;

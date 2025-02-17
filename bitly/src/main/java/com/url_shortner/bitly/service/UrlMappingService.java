@@ -19,13 +19,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UrlMappingService {
-
-    @Autowired
     private UrlRepo urlRepo;
-    @Autowired
     private ClickEventRepo clickEventRepo;
-   ;
     public UrlMappingDto createShortUrl(String originalUrl, User user) {
         String shortUrl=generateShorUrl();
         UrlMapping urlMapping=new UrlMapping();
