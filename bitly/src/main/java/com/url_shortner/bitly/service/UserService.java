@@ -7,6 +7,7 @@ import com.url_shortner.bitly.model.User;
 import com.url_shortner.bitly.request.LoginRequest;
 import com.url_shortner.bitly.request.UrlMappingDto;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

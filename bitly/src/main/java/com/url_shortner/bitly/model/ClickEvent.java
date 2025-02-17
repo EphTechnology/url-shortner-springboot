@@ -16,5 +16,5 @@ public class ClickEvent {
     @JoinColumn(name = "urlMapping_id")
     private UrlMapping urlMapping;
 
-    private LocalDate clicked_date;
+    private LocalDate clickDate;
 }

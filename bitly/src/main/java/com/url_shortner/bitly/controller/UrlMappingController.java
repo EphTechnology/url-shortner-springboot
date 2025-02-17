@@ -8,10 +8,11 @@ import com.url_shortner.bitly.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/urls")
-@AllArgsConstructor
+
 public class UrlMappingController {
     UserService userService;
     UrlMappingService urlMappingService;
@@ -34,7 +35,7 @@ public class UrlMappingController {
     }
 
     @GetMapping("/myurls")
-    public ResponseEntity<List<UrlMappingDto>> createShorUrl(Principal principal){
+    public ResponseEntity<List<UrlMappingDto>> getShortUrl(Principal principal){
         User user=userService.findByUserName(principal.getName());
         List<UrlMappingDto> urlMappingDto=urlMappingService.getUrlByUser(user);
         return new ResponseEntity<>(urlMappingDto,HttpStatus.OK);
@@ -49,6 +50,19 @@ public class UrlMappingController {
         LocalDateTime end=LocalDateTime.parse(endDate,dateTimeFormatter);
         List<ClickEventDto> clickEventDto=urlMappingService.getClickEventsByDate(shortURl,start,end);
         return new ResponseEntity<>(clickEventDto,HttpStatus.OK);
+    }
+    @GetMapping("/totalClicks")
+    public ResponseEntity<Map<LocalDate,Long>> getTotalClicks(Principal principal,
+                                                              @RequestParam String startDate,
+                                                              @RequestParam String endDate){
+
+        DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ISO_LOCAL_DATE;
+        User user=userService.findByUserName(principal.getName());
+        LocalDate start=LocalDate.parse(startDate,dateTimeFormatter);
+        LocalDate end=LocalDate.parse(endDate,dateTimeFormatter);
+
+        Map<LocalDate,Long> totalClicks=urlMappingService.getTotalClickByUser(user,start,end);
+        return new ResponseEntity<>(totalClicks, HttpStatus.OK);
     }
 
 }
